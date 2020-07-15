@@ -44,6 +44,24 @@ class MaterielEntrantController extends Controller
     }
 
     /**
+     * @Route("/annulerf", name="session_cancel")
+     */
+    public function annuler(SessionInterface $session,FournisseurRepository $fournisseurRepository)
+    {
+         // remove data session
+       $session->set('commande',[]);
+       $session->set('fournisseur',[]);
+
+        if ($session->get('fournisseur')!=[]) {
+          
+            return $this->redirectToRoute('choice_fournisseur');
+        }
+        $fournisseurs = $fournisseurRepository->findAll();
+        return $this->render('materiel_entrant/index.html.twig', [
+            'fournisseurs' => $fournisseurs,
+        ]);
+    }
+    /**
      * @Route("/choice/fournisseur", name="choice_fournisseur")
      */
     public function choix(SessionInterface $session,Request $request,FournisseurRepository $repo,MaterielRepository $mat_repo)
@@ -230,14 +248,10 @@ class MaterielEntrantController extends Controller
         
         // Output the generated PDF to Browser (inline view)
         $dompdf->stream('facture_'.$numero.'.pdf', [
-            "Attachment" => false
+            "Attachment" => ftrue
         ]);
         
-        return $this->render('materiel_entrant/facture.html.twig',[
-            'facture'=>$facture,
-            'fournisseur'=>$fournisseur,
-            'numero'=>$numero,
-        ]);
+        return $this->redirectToRoute('materiel_entrant');
     }
 
 

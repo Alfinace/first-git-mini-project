@@ -3,27 +3,8 @@
 {% block title %}Hello MaterielEntrantController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .step-detail{
-        height: 50px;
-        font-size: 15px;
-        font-weight: bolder;
-        border-bottom: 4px solid rgb(31, 146, 111);
-        padding-bottom: 7px;
-        padding: 10px;
-        width: 100%;
-        box-shadow: 1px 2px 13px;
-    }
-    .col-lg-3{
-        padding-left: 4px;
-    }
-    #smaller{
-        font-size: 12px;
-    }
-</style>
 <div class=" text-center">
+     <h3 style="margin:100px 0px 50px 0px;font-weight: bolder;" class="text-light">MATERIEL ENTRE</h3>
     <div class="row text-uppercase" style="height: 50px;">
         <div class="col-lg-3">
             <span class="step-detail bg-success text-light">Choix du fournisseur</span>
@@ -64,7 +45,7 @@
             <a href="{{ path('session_check') }}" class="btn btn-success  btn-sm float-right"> 
                 Terminer <i class="fa fa-check-circle" aria-hidden="true"></i>
             </a>
-            <a href="{{ path('session_check') }}" class="btn btn-danger  btn-sm float-left"> 
+            <a href="{{ path('session_cancel') }}" class="btn btn-danger  btn-sm float-left"> 
                Annuler <i class="fa fa-times" aria-hidden="true"></i>
             </a>
         </div>

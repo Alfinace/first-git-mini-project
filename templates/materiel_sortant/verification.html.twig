@@ -4,24 +4,8 @@
 {% block title %}Hello MaterielEntrantController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .step-detail{
-        height: 50px;
-        font-size: 15px;
-        font-weight: bolder;
-        border-bottom: 4px solid rgb(31, 146, 111);
-        padding-bottom: 7px;
-        padding: 10px;
-        width: 100%;
-        box-shadow: 1px 2px 13px;
-    }
-    .col-lg-3{
-        padding-left: 4px;
-    }
-</style>
 <div class=" text-center">
+    <h3 style="margin:100px 0px 50px 0px;font-weight: bolder;" class="text-light">MATERIEL SORTIE</h3>
     <div class="row text-uppercase" style="height: 50px;">
         <div class="col-lg-3">
             <span class="step-detail bg-danger text-light">Choix du personnel</span>
@@ -39,10 +23,10 @@
 </div>
     <br>
     <br>
-        <div class="row">
+        <div class="row bg-light">
             <div class="col-sm-12">
                 <h4 class="text-center">Liste des materiet sortis</h4>
-                    <table class="table shadow text-center">
+                    <table class="table  text-center">
                         <thead class="text-light bg-primary">
                             <tr>
                                 <th>Designation</th>
@@ -75,19 +59,19 @@
                         </tbody>
                     </table>
             </div>
+            <div class="col-md-12 mb-2">
+                <a href="{{ path('choice_personnel') }}" class="btn btn-warning float-left btn-outline"> 
+                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Ajouter commande 
+                </a>
+                {% if total != 0 %}
+                <a href="{{ path('session_valid_sortie') }}" class="btn btn-primary float-right btn-outline"> 
+                    Validation <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> 
+                </a> 
+                {% endif %}
+                <h4 class="text-danger float-right " style="margin-right: 100px;">Total : {{ total }} Ar</h4>
+            </div>
         </div>
-        <div>
-           
-        </div>
-        <div>
-            <a href="{{ path('choice_personnel') }}" class="btn btn-warning float-left btn-outline"> 
-                <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Ajouter commande 
-            </a>
-            <a href="{{ path('session_valid_sortie') }}" class="btn btn-primary float-right btn-outline"> 
-                Validation <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> 
-            </a> 
-            <h4 class="text-danger float-right " style="margin-right: 100px;">Total : {{ total }} Ar</h4>
-        </div>
+       
 
 {% endblock %}
 {% block javascripts %}

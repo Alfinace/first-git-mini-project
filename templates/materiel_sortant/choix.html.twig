@@ -3,31 +3,8 @@
 {% block title %}Hello MaterielEntrantController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .step-detail{
-        height: 50px;
-        font-size: 15px;
-        font-weight: bolder;
-        border-bottom: 4px solid rgb(31, 146, 111);
-        padding-bottom: 7px;
-        padding: 10px;
-        width: 100%;
-        transition: 0.2s all;
-        box-shadow: 1px 2px 13px;
-    }
-    .col-lg-3{
-        padding-left: 4px;
-    }
-    .step-detail:hover{
-       font-size: 20px;
-       transition: 0.2s all;
-       transform: skew(0,0.5);
-    }
-</style>
 <div class=" text-center">
-<h3 style="margin:100px 0px 50px 0px;">MATERIEL SORTIE</h3>
+<h3 style="margin:100px 0px 50px 0px;font-weight: bolder;" class="text-light">MATERIEL SORTIE</h3>
     <div class="row text-uppercase" style="height: 50px;">
         <div class="col-lg-3">
             <span class="step-detail bg-danger text-light">Choix du personnel</span>
@@ -43,8 +20,7 @@
         </div> 
     </div>
 </div>
-<div class="example-wrapper">
-    <br>
+<div class="example-wrapper" id="smaller" >
     <br>
     <h5 > Sortie du materiel par personnel  </h5>
     <br>

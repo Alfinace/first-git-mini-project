@@ -4,27 +4,9 @@
 {% block title %}Hello MaterielEntrantController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .step-detail{
-        height: 50px;
-        font-size: 15px;
-        font-weight: bolder;
-        border-bottom: 4px solid rgb(31, 146, 111);
-        padding-bottom: 7px;
-        padding: 10px;
-        width: 100%;
-        box-shadow: 1px 2px 13px;
-    }
-    .col-lg-3{
-        padding-left: 4px;
-    }
-    #smaller{
-        font-size: 12px;
-    }
-</style>
+
 <div class=" text-center">
+      <h3 style="margin:100px 0px 50px 0px;font-weight: bolder;" class="text-light">MATERIEL ENTRE</h3>
     <div class="row text-uppercase" style="height: 50px;">
         <div class="col-lg-3">
             <span class="step-detail bg-success text-light">Choix du fournisseur</span>
@@ -71,7 +53,7 @@
                                 {% set total = total + commande.materiel.prixUnitaire * commande.quantite %}
                             {% endif %}
                             {% else %}
-                                <tr>
+                               <tr>
                                     <td colspan="5" class="text-center">Liste vide</td>
                                 </tr>
                             {% endfor %}
@@ -82,9 +64,11 @@
                 <a href="{{ path('session_command') }}" class="btn btn-warning float-left btn-sm"> 
                     <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Ajouter commande 
                 </a>
-                <a href="{{ path('session_valid') }}" class="btn btn-primary float-right btn-sm"> 
-                    Validation <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> 
-                </a> 
+                 {% if total != 0 %}
+                    <a href="{{ path('session_valid') }}" class="btn btn-primary float-right btn-sm"> 
+                        Validation <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> 
+                    </a> 
+                 {% endif %}
                 <h4 class="text-danger float-right text-sm " style="margin-right: 100px;">Total : {{ total }} Ar</h4>
             </div>
         </div>
