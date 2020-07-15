@@ -36,7 +36,7 @@
                     <form method="post" id="form{{ fournisseur.id }}" action="{{ path('fournisseur_delete', {'id': fournisseur.id}) }}" onsubmit="return confirm('Etês-vous de vouloir supprimer?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ fournisseur.id) }}">
-                        <button type="submit" class="text-danger" style="border: none;"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button type="submit" class="text-danger" style="border: none;background-color: #fff;"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </form>
                 </td>
             </tr>

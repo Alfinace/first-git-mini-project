@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} edit-profile {% endblock %}
+{% block styles %}
+{{ parent() }}
+    <style>
+        .container{
+            width: 400px;
+            margin-top:10px;
+            background-color: rgba(235, 242, 243, 0.671);
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div>
+        <div class="text-center" style="font-size: 100px;">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Mettre à jour </button>
+    {{ form_end(form) }}
+    <br>
+</div>
+{% endblock %}

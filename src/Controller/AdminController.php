@@ -2,15 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Repository\MaterielRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\BonEntrantRepository;
 use App\Repository\BonSortantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\FournisseurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("admin")
@@ -29,6 +34,88 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'years' => $years,
         ]);
+    }
+    /**
+     * @Route("/user/profile",name="user_profile")
+     */
+    function profile(UserRepository $userRepository)
+    {
+        return $this->render('security/profile.html.twig',[
+            'user'=>$this->getUser()
+        ]);
+    }
+     /**
+     * @Route("/user/edit/",name="user_edit")
+     */
+    function profile_edit():Response
+    {
+        $user =new User();
+        $user =$this->getUser();
+        $form = $this->createForm(UserType::class,$user, [
+            'action' => $this->generateUrl('update_user'),
+            'method' => 'post',
+        ]);
+        return $this->render('security/edit.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/user/update",name="update_user")
+     */
+    function update(Request $request,EntityManagerInterface $manager):Response
+    {
+        $userOld =$this->getUser();
+        $req = $request->request->get('user');
+        $user =new User();
+        $user =$this->getUser();
+        $user->setFullname($req['fullname']);
+        $user->setUsername($req['username']);
+        $user->setContact($req['contact']);
+        $user->setAddress($req['address']);
+        $user->setEmail($req['email']);
+        $manager->persist($user);
+        $manager->flush();
+        $this->addFlash(
+            'notice',
+            'Votre profile est modifié avec succée'
+        );
+        return $this->redirectToRoute('user_profile');
+    }
+    /**
+     * @Route("/edit_password",name="edit_password")
+     */
+    function edit_password():Response
+    {
+        return $this->render('security/edit_password.html.twig');
+    }
+    /**
+     * @Route("/update_password",name="update_password")
+     */
+    function update_password(Request $request,UserPasswordEncoderInterface $encoder,UserRepository $userRepository):Response
+    {
+        $user = $this->getUser();
+        if ($encoder->isPasswordValid($user,$request->request->get('oldPassword'))) {
+           if ($request->request->get('newPassword') == $request->request->get('confirmPassword')) {
+                $passwordHash = $encoder->encodePassword($user, $request->request->get('newPassword'));
+                $userRepository->upgradePassword($user,$passwordHash);
+                $this->addFlash(
+                    'notice',
+                    'Le nouveau a modifié avec succée'
+                  );
+           }else {
+              $this->addFlash(
+                'notice',
+                'Le nouveau mot de passe n\'est pas confirmé'
+              );
+           }
+        }else {
+            $this->addFlash(
+                'notice',
+                'Mot de passe incorrect'
+              );
+        }
+        return $this->redirectToRoute('user_profile');
     }
     /**
      * @Route("/chart", name="chart")

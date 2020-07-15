@@ -65,6 +65,12 @@
                     <li class="nav-item" id="historique">
                         <a class="nav-link text warning" href="{{ path('sortant_list') }}"> <i class="fa fa-history" aria-hidden="true"></i> Historique</a>
                     </li>
+                     <li class="nav-item" id="profile">
+                        <a class="nav-link text warning" href="{{ path('user_profile') }}"> <i class="fas fa-user-check    "></i> Profile</a>
+                    </li>
+                    <li class="nav-item" id="password">
+                        <a class="nav-link text warning" href="{{ path('edit_password') }}"> <i class="fa fa-key " aria-hidden="true"></i>Changer le mot de pass</a>
+                    </li>
                 </ul>
                 <span class="my-2 my-lg-0 text-danger">
                     <a href="{{ path('app_logout') }}" class="text-danger btn " id="smaller"><i class="fa fa-sign-in" aria-hidden="true"></i>Deconnexion</a>

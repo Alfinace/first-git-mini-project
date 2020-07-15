@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+{% block title %} {{ parent() }} -profile {% endblock %}
+{% block styles %}
+{{ parent() }}
+    <style>
+        .container{
+            width: 400px;
+            margin-top:10px;
+            background-color: rgba(235, 242, 243, 0.671);
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div>
+        <br>
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <strong>{{ message }}</strong>
+            </div>          
+        {% endfor %}
+        <div class="text-center" style="font-size: 100px;">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Nom complet</th>
+                    <td>{{ user.fullname }}</td>
+                </tr>
+                </tr>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th>Addresse</th>
+                    <td>{{ user.address }}</td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td>{{ user.contact }}</td>
+                </tr>
+            </tbody>
+    </table>
+    <div class="mb-5">
+        <a href="{{ path('user_edit') }}" class="btn btn-primary btn-sm btn-block">Modifier</a>
+    </div>
+    <br>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}  
+    <script>
+        // active current page 
+        $(document).ready(()=>{
+            activeCurrentPage('profile');
+        });
+        //end
+    </script>
+{% endblock %}

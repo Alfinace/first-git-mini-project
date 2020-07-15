@@ -30,7 +30,7 @@
                             <form method="post" action="{{ path('personnel_delete', {'id': personnel.id}) }}" onsubmit="return confirm('Voulez-vous vous supprimer cet personnel?');">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ personnel.id) }}">
-                                <button class="text-danger" style="border: none; backface-visibility: hidden;"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <button class="text-danger" style="border: none; background-color:  #fff;"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </form>
                         </td>
                     </tr>
