@@ -1,0 +1,87 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MaterielEntrantController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .step-detail{
+        height: 50px;
+        font-size: 15px;
+        font-weight: bolder;
+        border-bottom: 4px solid rgb(31, 146, 111);
+        padding-bottom: 7px;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 1px 2px 13px;
+    }
+    .col-lg-3{
+        padding-left: 4px;
+    }
+</style>
+<div class=" text-center">
+    <div class="row text-uppercase" style="height: 50px;">
+        <div class="col-lg-12">
+            <span class="step-detail bg-success text-light">Fiche</span>
+        </div> 
+    </div>
+</div>
+    <br>
+    <br>
+        <div class="row">
+            <div class="shadow " style="width: 800px;margin: 50px auto;padding:20px;font-weight: bolder;">
+                <h4 class="text-center text-uppercase" style="font-weight: bolder;margin-bottom: 100px;">fiche des materiels sortis </h4>
+                
+                    <ul class="list-group mb-5 text-capitalize" style="width: 300px;">
+                        <li class="list-group-item">
+                            Numero de fiche : {{ numero }}
+                        </li>
+                        <li class="list-group-item">
+                            Nom du personnel : {{ personnel.nom }}
+                        </li>
+                        <li class="list-group-item">
+                            Prix total:
+                        </li>
+                        <li class="list-group-item">
+                           Date : {{ date|date("m/d/Y") }}
+                        </li>
+                    </ul>
+                    <h5 class="text-center">Liste des matériels detenu</h5>
+                    <div style="width: 80%;margin: 50px">
+                        <table class="table text-uppercase  text-center">
+                            <thead >
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>Quantite</th>
+                                    <th>Prix unitaire</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set total = 0 %}
+                                {% for fiche in fiche %}
+                                
+                                    <tr>
+                                        <td>{{ fiche.materiel.designation }}</td>
+                                        <td>{{ fiche.quantite }}</td>
+                                        <td>{{ fiche.materiel.prixUnitaire }}</td>
+                                        <td>{{ fiche.materiel.prixUnitaire * fiche.quantite}}</td>
+                                    </tr>
+                                    {% set total = total + fiche.materiel.prixUnitaire * fiche.quantite %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+        <div>
+           
+        </div>
+
+{% endblock %}
+
+
+
+

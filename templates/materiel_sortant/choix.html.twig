@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MaterielEntrantController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .step-detail{
+        height: 50px;
+        font-size: 15px;
+        font-weight: bolder;
+        border-bottom: 4px solid rgb(31, 146, 111);
+        padding-bottom: 7px;
+        padding: 10px;
+        width: 100%;
+        transition: 0.2s all;
+        box-shadow: 1px 2px 13px;
+    }
+    .col-lg-3{
+        padding-left: 4px;
+    }
+    .step-detail:hover{
+       font-size: 20px;
+       transition: 0.2s all;
+       transform: skew(0,0.5);
+    }
+</style>
+<div class=" text-center">
+<h3 style="margin:100px 0px 50px 0px;">MATERIEL SORTIE</h3>
+    <div class="row text-uppercase" style="height: 50px;">
+        <div class="col-lg-3">
+            <span class="step-detail bg-danger text-light">Choix du personnel</span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail bg-danger text-light">Materiel sortie <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Vérification <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Validation <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div> 
+    </div>
+</div>
+<div class="example-wrapper">
+    <br>
+    <br>
+    <h5 > Sortie du materiel par personnel  </h5>
+    <br>
+    {% for message in app.flashes('notice')  %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <stan style="font-size: 10px;">{{ message }}</stan> 
+        </div>
+    {% endfor %}
+        <form action="{{ path('session_sortie') }}" method="post">
+            <div class="form-group">
+                <label for="materiel_id">Materiel</label>
+                <select class="custom-select" name="materiel" id="materiel_id" required>
+                    {% for materiel in materiels %}
+                        <option value="{{ materiel.id }}">{{ materiel.designation }}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-group">
+                  <label for="quantite">Quantite</label>
+                  <input type="number"
+                    class="form-control" name="quantite" id="quantite"  placeholder="" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-outline"> Continuer ajouter le commande <i class="fa fa-plus" aria-hidden="true"></i></button>
+            </div>
+        </form>
+        <div>
+            <a href="{{ path('annuler_sortant') }}" class="btn btn-danger float-leht btn-outline"> 
+                Annuler <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </a>
+        <a href="{{ path('session_check_sortie') }}" class="btn btn-success float-right  btn-outline">
+             Terminer <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </a>
+        </div>
+</div>
+{% endblock %}

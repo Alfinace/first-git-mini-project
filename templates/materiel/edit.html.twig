@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Materiel{% endblock %}
+
+{% block styles %}
+    <style>
+        .container{
+            width: 400px;
+            margin-top:100px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="card ">
+        <a href={{ path('materiel_index') }} class=" float-right ">Returne a la liste</a>
+      <div class="card-body">
+        <div>
+            <h4 class="card-title text-center text-uppercase text-primary">Nouveau materiel</h4>
+            {{ include('materiel/_form.html.twig', {'button_label': 'Update'}) }}      
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+

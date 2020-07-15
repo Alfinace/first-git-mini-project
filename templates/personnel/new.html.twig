@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ajouter Personnel{% endblock %}
+{% block styles %}
+    <style>
+        .container{
+            width: 400px;
+            margin-top:100px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="card text-primary">
+      <div class="card-body">
+        <div>
+            <h4 class="card-title text-center">Nouveau du personnel</h4>
+            {{ include('personnel/_form.html.twig') }} 
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiel{% endblock %}
+{% block styles %}
+{{ parent() }}
+    <style>
+        .container{
+            width: 400px;
+            margin-top:10px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div class="card container">
+
+    <h5 class="text-center mb-5" style="font-weight: bolder;">{{ materiel.designation }}</h5>
+    <a href="{{ path('materiel_index') }}" class="float-left">RETOUR</a>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ materiel.id }}</td>
+            </tr>
+            <tr>
+                <th>Designation</th>
+                <td>{{ materiel.designation }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ materiel.quantite }}</td>
+            </tr>
+            <tr>
+                <th>PrixUnitaire</th>
+                <td>{{ materiel.prixUnitaire }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ materiel.createdAt ? materiel.createdAt|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+</div>
+    
+    </table>
+
+    
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MaterielEntrantController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .step-detail{
+        height: 50px;
+        font-size: 15px;
+        font-weight: bolder;
+        border-bottom: 4px solid rgb(31, 146, 111);
+        padding-bottom: 7px;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 1px 2px 13px;
+    }
+    .col-lg-3{
+        padding-left: 4px;
+    }
+    #smaller{
+        font-size: 12px;
+    }
+</style>
+<div class=" text-center">
+    <div class="row text-uppercase" style="height: 50px;">
+        <div class="col-lg-3">
+            <span class="step-detail bg-success text-light">Choix du fournisseur</span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail bg-success text-light">Commande <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Vérification <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Validation <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div> 
+    </div>
+</div>
+<div class="example-wrapper" id="smaller">
+    <br>
+    <h5>Commande avec le fournisseur  </h5>
+    <br>
+        <form action="{{ path('session_command') }}" method="post">
+            <div class="form-group">
+                <label for="materiel_id">Materiel</label>
+                <select class="custom-select custom-select-sm" name="materiel" id="materiel_id smaller" required>
+                    <option selected>Select one</option>
+                    {% for materiel in materiels %}
+                        <option value="{{ materiel.id }}">{{ materiel.designation }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                <div class="form-group">
+                  <label for="quantite">Quantite</label>
+                  <input type="number"
+                    class="form-control form-control-sm" name="quantite" id="quantite"  placeholder="" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-sm"> Continuer ajouter le commande <i class="fa fa-plus" aria-hidden="true"></i></button>
+        </form>
+        <div style="margin-top: 12px;">
+            <a href="{{ path('session_check') }}" class="btn btn-success  btn-sm float-right"> 
+                Terminer <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </a>
+            <a href="{{ path('session_check') }}" class="btn btn-danger  btn-sm float-left"> 
+               Annuler <i class="fa fa-times" aria-hidden="true"></i>
+            </a>
+        </div>
+</div>
+{% endblock %}

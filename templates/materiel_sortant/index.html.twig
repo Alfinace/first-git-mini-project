@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Materiel sortant{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 300px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .step-detail{
+        height: 50px;
+        font-size: 15px;
+        font-weight: bolder;
+        border-bottom: 4px solid rgb(31, 146, 111);
+        padding-bottom: 7px;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 1px 2px 13px;
+    }
+    .col-lg-3{
+        padding-left: 4px;
+    }
+</style>
+<div class=" text-center">
+    <div class="row text-uppercase" style="height: 50px;">
+        <div class="col-lg-3">
+            <span class="step-detail bg-danger text-light">Choix du personnel</span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Materiel sortie <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Vérification <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="col-lg-3">
+            <span class="step-detail">Validation <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div> 
+    </div>
+</div>
+<div class="example-wrapper">
+    <a href={{ path('personnel_new') }} class="btn btn-primary float-right">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>Ajouter un personnel
+    </a>
+    <br>
+    <br>
+    <h5>Choisissez le personnel concerne</h5>
+    <br>
+    <form action="{{ path('choice_personnel') }}" method="post">
+        <div class="form-group">
+            <label for=""></label>
+            <select  class="custom-select" name="personnel" id="" required>
+             {% for personnel in personnels %}
+                 <option value="{{ personnel.id }}">{{ personnel.nom }}</option>
+             {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-outline">Continuer <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+    </form>
+    
+</div>
+{% endblock %}

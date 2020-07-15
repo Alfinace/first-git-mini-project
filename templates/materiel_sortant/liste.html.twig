@@ -1,0 +1,225 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs text-uppercase" style="font-weight: bolder;">
+      <li class="nav-item">
+        <a class="nav-link active text-danger" data-toggle="tab" href="#home">Materiel entré</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-danger" data-toggle="tab" href="#menu1">Materiel sorti </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-danger" data-toggle="tab" href="#menu2">Telecharger facture </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-danger" data-toggle="tab" href="#menu3">Telecharger fiche  du detenu</a>
+      </li>
+    </ul>
+  
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div id="home" class="container tab-pane active"><br>
+        <div class="row">
+            <div class="col-sm-12" >
+                <h4 class="text-center">Materiels entrant</h4>
+                <input type="text" placeholder="recherche" id="myInput">
+                <div style="height: 400px;overflow-y: auto;">
+                    <table class="table table-dark table-hover">
+                        <thead class="text-light bg-primary">
+                            <tr>
+                                <th>Designation</th>
+                                <th>Quantite</th>
+                                <th>Prix unitaire</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            {% set total1 = 0 %}
+                            {% for entrant in entrants %}
+                            {% if entrant.materiel != null %}  
+                                <tr class="text-right">
+                                    <td>{{ entrant.materiel.designation }}</td>
+                                    <td>{{ entrant.quantite }}</td>
+                                    <td>{{ entrant.materiel.prixUnitaire }}</td>
+                                    <td>{{ entrant.materiel.prixUnitaire * entrant.quantite}}</td>
+                                    <td>{{ entrant.createdAt|date("m/d/Y")}}</td>
+                                </tr>
+                                {% set total1 = total1 + entrant.materiel.prixUnitaire * entrant.quantite %}
+                            {% endif %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">Liste vide</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     <div>
+</div>
+      </div>
+      <div id="menu1" class="container tab-pane fade"><br>
+        <div class="row">
+            <div class="col-sm-12" >
+                <h4 class="text-center">Materiels detenu</h4>
+                <input type="text" placeholder="recherche" id="myInput">
+                <div style="height: 400px;overflow-y: auto;">
+                    <table class="table table-dark table-hover">
+                        <thead class="text-light bg-primary">
+                            <tr>
+                                <th>Designation</th>
+                                <th>Quantite</th>
+                                <th>Prix unitaire</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            {% set total = 0 %}
+                            {% for sortant in sortants %}
+                            {% if sortant.materiel != null %}  
+                                <tr class="text-right">
+                                    <td>{{ sortant.materiel.designation }}</td>
+                                    <td>{{ sortant.quantite }}</td>
+                                    <td>{{ sortant.materiel.prixUnitaire }}</td>
+                                    <td>{{ sortant.materiel.prixUnitaire * sortant.quantite}}</td>
+                                    <td>{{ sortant.createdAt|date("m/d/Y")}}</td>
+                                </tr>
+                                {% set total = total + sortant.materiel.prixUnitaire * sortant.quantite %}
+                            {% endif %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">Liste vide</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     <div>
+</div>
+      </div>
+      <div id="menu2" class="container tab-pane fade"><br>
+        <div class="row">
+            <div class="col-sm-12" >
+                <h4 class="text-center">Fichiers factures</h4>
+                <input type="date" placeholder="recherche" id="input_search">
+                <button id="btn_search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <div style="height: 400px;overflow-y: auto;">
+                    <table class="table table-dark table-bordered text-center table-hover">
+                        <thead class="text-light bg-danger text-uppercase ">
+                            <tr>
+                                <th>Fournisseur</th>
+                                <th>Numero facture</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class=" text-center" id="facture">
+                           {% for facture in factures %}
+                            <tr>
+                                <td>{{ facture.nom }}</td>
+                                <td>F000{{ facture.pack }}</td>
+                                <td>{{facture.created_at|date("d/m/Y") }}</td>
+                                <td><a name="" id="" class="btn btn-danger btn-sm" href="/uploads/facture_pdf/{{ facture.file }}"="button">Télécharger <i class="fa fa-download" aria-hidden="true"></i></a></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">Liste vide</td>
+                            </tr>
+                           {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     <div>
+</div>
+      </div>
+      <div id="menu3" class="container tab-pane fade"><br>
+        <div class="row">
+            <div class="col-sm-12" >
+                <h4 class="text-center">Fichiers de fiche detenue</h4>
+                <input type="" placeholder="recherche" id="input_search">
+                <button id="btn_search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <div style="height: 400px;overflow-y: auto;">
+                    <table class="table table-dark table-bordered text-center table-hover">
+                        <thead class="text-light bg-primary text-uppercase">
+                            <tr>
+                                <th>Personnel</th>
+                                <th>Numero fiche</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="">
+                            {% for fiche in fiches %}
+                            <tr class="text-right text-center">
+                                <td>{{ fiche.nom }}</td>
+                                <td>FI000{{ fiche.pack }}</td>
+                                <td>{{fiche.created_at }}</td>
+                                <td><a name="" id="" class="btn btn-primary btn-sm" href="/uploads/fiche_pdf/{{ fiche.file }}" role="button">Télécharger <i class="fa fa-download" aria-hidden="true"></i></a></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">Liste vide</td>
+                            </tr>
+                           {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     <div>
+</div>
+      </div>
+    </div>
+  </div>
+        
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+
+          $("#btn_search").on("click", function() {
+            var value = $('#input_search').val().toLowerCase();
+            $("#facture tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+
+          $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+{% endblock %}
+
+
+

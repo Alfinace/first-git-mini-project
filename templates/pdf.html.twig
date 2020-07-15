@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            App*web
+        {% endblock %}
+    </title>
+    {% block stylesheets %}
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+    <script src="{{asset('js/sweetalert.js')}}"></script>
+    {% endblock %}
+    {% block styles %}
+    <style>
+        .container-specificed{
+            width: 1000px;
+            margin-top:100px;
+            background-color: rgb(250, 249, 249);
+        }
+    </style>{% endblock %}
+</head>
+<body class="bg-gray">
+    <div class="container" style="margin-top: 70px;">
+        <!-- body content -->
+        {% block body %}{% endblock %}
+    </div>
+    {% block javascripts %}
+    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    {% endblock %}
+</body>
+</html>

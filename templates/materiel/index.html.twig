@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiel index{% endblock %}
+{% block styles %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    
+<div class="container container-specificed">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Liste de materiel disponible</h4>
+            <a href={{ path('materiel_new') }} class="btn btn-primary btn-sm float-right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>Ajouter
+            </a>
+            <table class="table shadow">
+        <thead class="text-light text-uppercase bg-primary">
+            <tr>
+                <th>Designation</th>
+                <th>Quantite</th>
+                <th>PrixUnitaire</th>
+                <th>Date</th>
+                <th colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for materiel in materiels %}
+            <tr>
+                <td>{{ materiel.designation }}</td>
+                <td>{{ materiel.quantite }}</td>
+                <td>{{ materiel.prixUnitaire }}</td>
+                <td>{{ materiel.createdAt ? materiel.createdAt|date('d/m/Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('materiel_show', {'id': materiel.id}) }}"><i class="fa fa-eye" aria-hidden="true"></i></a> 
+                </td>
+                <td>
+                    <a href="{{ path('materiel_edit', {'id': materiel.id}) }}" class="text-warning"><i class="fas fa-edit    "></i></a>
+                </td>
+                <td>
+                    <form method="post" id="form{{ materiel.id }}" action="{{ path('materiel_delete', {'id': materiel.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ materiel.id) }}">
+                        <a href="#" class="text-danger" onclick="document.getElementById('form{{ materiel.id }}').onsubmit()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">Liste vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+        
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <style>
+        table,th,td{
+            border:1px solid #000;
+            border-collapse: collapse;
+        }
+        table{
+            width: 90%;
+            margin: 10px auto;
+            font-size: 15px;
+            text-align: center;
+            border: none;
+        }
+        thead{
+            text-transform: uppercase;
+        }
+        ul>li{
+            list-style-type: none;
+            padding-bottom: 5px;
+            width: 700px;
+        }
+        ul>li>strong{
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div style="letter-spacing: 2px; text-align: center;margin-bottom: 70px;font-weight: bolder; font-size: 25px;">
+      FICHE DU DETENTEUR<br>
+      ********************
+    </div>
+    <div class="row">
+        <ul  style="width: 300px;">
+            <li class="item">
+                        <strong>N° FIche :</strong> {{ numero }}
+            </li>
+            <li class="item">
+                <strong>Nom du Personnel:</strong> 
+                {% if personnel !=null %}
+                    {{ personnel.nom }}
+                {% endif %}
+            </li>
+            <li class="item">
+                <strong>Date:</strong> {{ date }}
+            </li>
+        </ul>
+        <h4 style="text-align: center;text-transform: uppercase;text-decoration: underline;">Liste des materiels detenu</h4>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Designation</th>
+                        <th>Quantite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fiche in fiche %}
+                    <tr>
+                        <td>{{ fiche.materiel.designation }}</td>
+                        <td>{{ fiche.quantite }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+        </div>
+        <div style="margin-left: 35px;">
+                <br>
+                <br>
+                <br>
+                <div style="font-size: 12px; text-decoration: underline;">
+                    <span style="font-style: italic;float: left;">Signature du responsable</span>
+                    <span style="font-style: italic; float: right; margin-right: 35px;">Signature du personnel</span>
+                </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+        
+
+
+
+

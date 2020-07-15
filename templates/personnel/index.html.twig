@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personnel index{% endblock %}  
+
+{% block body %}  
+<div class="container container-specificed">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="text-center">Liste du personnel</h3>
+            <a  class="btn btn-primary btn-sm float-right" href="{{ path('personnel_new')}}"><i class="fa fa-plus" aria-hidden="true"></i>Ajouter</a>
+        </div>
+        <div class="col-sm-12">
+            <table class="table">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Fonction</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for personnel in personnels %}
+                    <tr>
+                        <td>{{ personnel.nom }}</td>
+                        <td>{{ personnel.fonction.libelle }}</td>
+                        <td>
+                            <a href="{{ path('personnel_edit', {'id': personnel.id}) }}"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                        </td>
+                        <td>
+                            <form method="post" action="{{ path('personnel_delete', {'id': personnel.id}) }}" onsubmit="return confirm('Voulez-vous vous supprimer cet personnel?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ personnel.id) }}">
+                                <button class="text-danger" style="border: none; backface-visibility: hidden;"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center ">List vide</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

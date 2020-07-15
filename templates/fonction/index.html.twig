@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fonction{% endblock %}
+{% block styles %}
+{{ parent() }}
+    <style>
+        .card{
+            margin: 50pw 0px 50px 0px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+<div class="container container-specificed bg-light">
+    {% for message in app.flashes('notice') %}
+    <script>
+        swal({
+            title:"Avertissement",
+            text:'{{ message }}',
+            icon:"error",
+            button:false,
+        });
+    </script> 
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+    <script>
+        swal({
+            title:"Information",
+            text:'{{ message }}',
+            icon:"success",
+            button:false,
+        });
+    </script> 
+    {% endfor %}
+    <h3 class="text-uppercase text-center">Fonction du personnel</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <a class="btn btn-sm float-right btn-primary" data-toggle="tooltip" data-placement="right" title="ajouter" href="{{ path('fonction_new') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 mb-5 ">
+            <div class="card border-default">
+              <div class="card-body">
+                <h5 class="text-center">Formulaire <i class="fa fa-plus" aria-hidden="true"></i></h5>
+                <form name="fonction" method="post" novalidate="novalidate" action="{{ path('fonction_new') }}">
+                    <div id="fonction">
+                        <div class="form-group">
+                            <label for="fonction_libelle" class="required">Libelle</label>
+                            <input type="text" id="fonction_libelle" name="fonction[libelle]" required class="form-control small mb-5 form-control-sm"/>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="hidden" id="fonction__token" name="fonction[_token]" value="{{ csrf_token('fonction') }}" />
+                    </div>
+                        <button type="submit" id="fonction_Enregister" name="fonction[Enregister]" class="btn btn-primary btn-sm">Enregister</button>
+                </form>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <table class="table  text-center text-dark">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th>Libelle</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for fonction in fonctions %}
+                    <tr>
+                        <td>{{ fonction.libelle }}</td>
+                        <td>
+                            <a class="text-success" href="{{ path('fonction_edit', {'id': fonction.id}) }}"><i class="fas fa-edit    "></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+

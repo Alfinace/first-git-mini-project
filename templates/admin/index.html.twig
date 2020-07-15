@@ -1,0 +1,294 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<div class="jumbotron shadow">
+    <canvas id="myChart1" width="100%" height="30px"></canvas>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group" style="font-weight: bolder;">
+                <label for="">FORME</label>
+                <select class="custom-select" id="forme" onchange="nbrs(this.value,$('#years').val(),$('#mode').val(),$('#mode_date').val());">
+                    <option value="line">LINE</option>
+                    <option value="pie">PIE</option>
+    
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" style="font-weight: bolder;">
+                <label for="">Materiel</label>
+                <select class="custom-select" id="mode" onchange="nbrs($('#forme').val(),$('#years').val(),this.value,$('#mode_date').val());">
+                    <option value="entrant">Materiel entree</option>
+                    <option value="sortant">Materiel sorti</option>
+                    <option value="tous">Tout</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" style="font-weight: bolder;">
+                <label for="">FILTRER PAR ANNEE</label>
+                    <select class="custom-select" id="years" onchange="nbrs($('#forme').val(),this.value,$('#mode').val(),$('#mode_date').val());">
+                        {% for year in years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group" style="font-weight: bolder;">
+                <label for="">MODE</label>
+                    <select class="custom-select" id="mode_date" onchange="nbrs($('#forme').val(),$('#years').val(),$('#mode').val(),this.value,)">
+                        <option value="month">MOIS </option>
+                        <option value="day">Date</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron shadow">
+    <div class="row" style="height: auto;">
+        <div class="col-md-4">
+            <canvas id="myChartFournisseur" width="100%" height="70px"></canvas>
+        </div>
+        <div class="col-md-4">
+            <canvas id="myChartPersonnel" width="100%" height="70px"></canvas>
+        </div>
+        <div class="col-md-4">
+            <canvas id="myChartMateriel" width="100%" height="70px"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('chart/Chart.min.js') }}"></script>
+    <script>
+        function des(value){
+            if(value=='tous'){
+                $('#mode_date').attr('disabled','disabled')
+            }else{
+                $('#mode_date').removeAttr('disabled')
+            }
+        }
+       $(document).ready(()=>{
+           //call function shower graphic
+        nbrs($('#forme').val(),$('#years').val(),$('#mode').val(),$('#mode_date').val());
+        chartFournisseur();
+        chartPersonnel();
+        chartMateriel();
+       })
+        function nbrs(forme,annee,mode,mode_date) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+       $.ajax({
+            url:"{{ path('chart') }}",
+            method:"GET",
+            data:{query:annee,mode :mode,mode_date :mode_date},
+            dataType:'json',
+            success:function(data){
+                console.log('ok');
+                var donne2=[];
+                var donne1=[];
+                donne1=data.data1;
+                donne2=data.data2;
+                var mode=data.mode_date;
+                console.log(donne1);
+                var ctx = document.getElementById('myChart1').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: $('#forme').val(),
+                    data: {
+                        labels: mode,
+                        datasets: [
+                        {
+                            label: 'Sortant',
+                            data: donne2,
+                            backgroundColor:'rgba(222,8, 7,0.5)',
+                            borderColor: [
+                                'rrgb(222,71,8)'
+                            ],
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Entrant ',
+                            data: donne1,
+                            backgroundColor:'rgba(7,222,8,0.5)',
+                            borderColor:'rgb(7,222,8)',
+                            borderWidth: 1
+                        },],
+                         
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+    //chart fournisseur
+
+    function chartFournisseur() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+   $.ajax({
+        url:"{{ path('chartFournisseur') }}",
+        method:"GET",
+        data:{},
+        dataType:'json',
+        success:function(data){
+            var donne1=[];
+            var donne2=[];
+            donne1=data.data_nom;
+            donne2=data.data;
+            console.log(donne1);
+            var ctx = document.getElementById('myChartFournisseur').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type:'bar',
+                data: {
+                    labels: donne1,
+                    datasets: [
+                    {
+                        label: 'STATISTIC DU FOURNISSEUR',
+                        data: donne2,
+                        backgroundColor:'rgba(8,222,7,0.5)',
+                        borderColor: [
+                            'rrgb(222,71,8)'
+                        ],
+                        borderWidth: 1
+                    }],
+                     
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    });
+}
+
+
+  //chart Personnel
+
+  function chartPersonnel() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+$.ajax({
+    url:"{{ path('chartPersonnel') }}",
+    method:"GET",
+    data:{},
+    dataType:'json',
+    success:function(data){
+        var donne1=[];
+        var donne2=[];
+        donne1=data.data_nom;
+        donne2=data.data;
+        console.log(donne1);
+        var ctx = document.getElementById('myChartPersonnel').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type:'bar',
+            data: {
+                labels: donne1,
+                datasets: [
+                {
+                    label: ' STATISTIC DU PERSONNEL DETENUE LE MATERIEL',
+                    data: donne2,
+                    backgroundColor:'rgba(222,8, 7,0.5)',
+                    borderColor: [
+                        'rrgb(222,71,8)'
+                    ],
+                    borderWidth: 1
+                }],
+                 
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+});
+}
+
+
+
+ //chart Personnel
+
+ function chartMateriel() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+$.ajax({
+    url:"{{ path('chartMateriel') }}",
+    method:"GET",
+    data:{},
+    dataType:'json',
+    success:function(data){
+        var donne1=[];
+        var donne2=[];
+        donne1=data.data_nom;
+        donne2=data.data;
+        var ctx = document.getElementById('myChartMateriel').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type:'bar',
+            data: {
+                labels: donne1,
+                datasets: [
+                {
+                    label: 'STATISTIC DU STOCK MATERIEL ',
+                    data: donne2,
+                    backgroundColor:'rgba(22,8, 7,0.5)',
+                    borderColor: [
+                        'rrgb(222,71,8)'
+                    ],
+                    borderWidth: 1
+                }],
+                 
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+});
+}
+          
+    </script>
+{% endblock %}

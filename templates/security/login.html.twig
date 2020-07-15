@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <style>
+        .login{
+            transition: 0.5s all;
+            width: 300px;
+            height: auto;
+            margin: 50px auto;
+            border-radius: 2px;
+            box-shadow: 1px 4px 1px;
+            color: rgb(202, 220, 223);
+        }
+        .login:hover{
+            transition: 0.5s all;
+           box-shadow: 7px -3px 1px;
+        }
+        .h3{
+            margin-top: 20px;
+        }
+        #smaller{
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body style="background-image: url({{ asset('images/bg.jpg') }});background-attachment: fixed;">
+    <div class="container login" id="smaller">
+        <div class="row">
+            <div class="col-sm-12">
+                <form method="post">
+                    <h5 class="mb-5  font-weight-normal text-center" >Authentification</h3>
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input id="smaller" type="email" name="email" id="email" value="{{ last_username }}" class="form-control form-control-sm" placeholder="votre email" aria-describedby="helpId" required autofocus>
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Mot de passe</label>
+                      <input id="smaller" type="password" class="form-control form-control-sm" name="password" id="password" placeholder="votre mot de passe">
+                    </div>
+                
+                    <input id="smaller" type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                
+                    {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+                
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input id="smaller" type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+                    #}
+                    <br>
+                    <button class="btn btn-lg btn-block btn-sm btn-primary" id="smaller" type="submit">
+                        Connexion
+                    </button>
+                </form>
+                
+            </div>
+            
+        </div>
+        <br>
+        <br>
+        <br>
+    </div>
+</body>
+</html>
