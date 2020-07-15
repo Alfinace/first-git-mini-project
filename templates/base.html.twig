@@ -33,7 +33,7 @@
 </head>
 <body class="bg-gray" id="smaller" style="background-image: url({{ asset('images/bg.jpg') }});background-attachment: fixed;">
     <header class="fixed-top">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-image: url({{ asset('images/bg.jpg') }})">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: #000">
             <a class="navbar-brand text-uppercase" id="smaller" href="#">Gestion du material</a>
             <a class="navbar-toggler d-lg-none text-light"  data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                 aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-align-justify" aria-hidden="true"></i></a>
@@ -72,9 +72,20 @@
                         <a class="nav-link text warning" href="{{ path('edit_password') }}"> <i class="fa fa-key " aria-hidden="true"></i>Changer le mot de passe</a>
                     </li>
                 </ul>
-                <span class="my-2 my-lg-0 text-danger">
-                    <a href="{{ path('app_logout') }}" class="text-danger btn " id="smaller"><i class="fa fa-sign-in" aria-hidden="true"></i>Deconnexion</a>
+              <div class="btn-group">
+                <span  class="btn btn-secondary text-capitalize" style="width: 100px;">
+                    <i class="fa fa-user-circle" style="font-size: 20px;" aria-hidden="true"></i>
+                    {{ app.getUser.username }}
                 </span>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu bg-danger">
+                 <form action="{{ path('app_logout') }}" method="get">
+                     <button type="submit" class="btn btn-danger btn-sm btn-block">se déconnecter</button>
+                 </form>
+                </div>
+              </div>
             </div>
         </nav>
     </header>
