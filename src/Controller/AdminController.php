@@ -100,22 +100,23 @@ class AdminController extends AbstractController
                 $passwordHash = $encoder->encodePassword($user, $request->request->get('newPassword'));
                 $userRepository->upgradePassword($user,$passwordHash);
                 $this->addFlash(
-                    'notice',
-                    'Le nouveau a modifié avec succée'
+                    'msgSuccess',
+                    'Le nouveau mot de passe est modifié avec succée'
                   );
+                  return $this->redirectToRoute('user_profile');
            }else {
               $this->addFlash(
-                'notice',
+                'unconfirmedPassword',
                 'Le nouveau mot de passe n\'est pas confirmé'
               );
            }
         }else {
             $this->addFlash(
-                'notice',
+                'wrongPassword',
                 'Mot de passe incorrect'
               );
         }
-        return $this->redirectToRoute('user_profile');
+        return $this->redirectToRoute('edit_password');
     }
     /**
      * @Route("/chart", name="chart")
