@@ -90,7 +90,16 @@
         </div>
 
 {% endblock %}
-
+{% block javascripts %}
+    {{ parent() }}  
+    <script>
+        // active current page 
+        $(document).ready(()=>{
+            activeCurrentPage('enter');
+        });
+        //end
+    </script>
+{% endblock %}
 
 
 

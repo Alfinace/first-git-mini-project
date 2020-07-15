@@ -187,7 +187,14 @@
         
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
+    {{ parent() }}  
+    <script>
+        // active current page 
+        $(document).ready(()=>{
+            activeCurrentPage('historique');
+        });
+        //end
+    </script>
     <script>
         $(document).ready(function(){
           $("#myInput").on("keyup", function() {

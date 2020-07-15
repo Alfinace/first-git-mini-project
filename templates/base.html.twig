@@ -24,7 +24,12 @@
         #smaller{
             font-size: 11px;
         }
-    </style>{% endblock %}
+        .active>.nav-link{
+            background-color: rgb(56, 172, 180);
+            
+        }
+    </style>
+    {% endblock %}
 </head>
 <body class="bg-gray" id="smaller" style="background-image: url({{ asset('images/bg.jpg') }});background-attachment: fixed;">
     <header class="fixed-top">
@@ -34,30 +39,30 @@
                 aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-align-justify" aria-hidden="true"></i></a>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
+                    <li class="nav-item " id="dashboard">
                         <a class="nav-link" href="{{ path('admin') }}">DASHBOARD <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="personnel">
                         <a class="nav-link" href="{{ path('personnel_index') }}"><i class="fa fa-user" aria-hidden="true"></i> Personnel</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="fonction">
                         <a class="nav-link" href="{{ path('fonction_index') }}"><i class="fa fa-forward
                             " aria-hidden="true"></i> Fonction</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="materiel">
                         <a class="nav-link" href="{{ path('materiel_index') }}"><i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i></i> Materiel</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="fournisseur">
                         <a class="nav-link" href="{{ path('fournisseur_index') }}"><i class="fa fa-caret-right" aria-hidden="true"></i></i> Fourmisseur</a>
                     </li>
                    
-                    <li class="nav-item">
+                    <li class="nav-item" id="enter">
                         <a class="nav-link text-success" href="{{ path('materiel_entrant') }}"><i class="fa fa-sort" aria-hidden="true"></i> Bon Entrant</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="out">
                         <a class="nav-link text-danger" href="{{ path('materiel_sortant') }}"><i class="fa fa-sort" aria-hidden="true"></i>Materiel Sortie</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="historique">
                         <a class="nav-link text warning" href="{{ path('sortant_list') }}"> <i class="fa fa-history" aria-hidden="true"></i> Historique</a>
                     </li>
                 </ul>
@@ -74,6 +79,12 @@
     {% block javascripts %}
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script>
+        function activeCurrentPage(page){
+            $('.nav-item').removeClass('active');
+            $('#'+page+'').addClass('active');
+        }
+    </script>
     {% endblock %}
 </body>
 </html>

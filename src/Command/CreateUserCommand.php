@@ -66,7 +66,7 @@ class CreateUserCommand extends Command
         $user->setPassword($this->passwordEncoder->encodePassword($user,$password));
         $this->manager->persist($user);
         $this->manager->flush();
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->success('One user created! Pass --help to see your options.');
 
         return 0;
     }

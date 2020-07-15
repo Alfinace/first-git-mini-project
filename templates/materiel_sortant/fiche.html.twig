@@ -81,7 +81,16 @@
         </div>
 
 {% endblock %}
-
+{% block javascripts %}
+    {{ parent() }}  
+    <script>
+        // active current page 
+        $(document).ready(()=>{
+            activeCurrentPage('out');
+        });
+        //end
+    </script>
+{% endblock %}
 
 
 

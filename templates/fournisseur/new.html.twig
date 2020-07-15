@@ -23,4 +23,14 @@
       </div>
     </div>
 </div>
+{% endblock %}{% block javascripts %}
+    {{ parent() }}  
+    <script>
+        // active current page 
+        $(document).ready(()=>{
+            activeCurrentPage('fournisseur');
+        });
+        //end
+    </script>
 {% endblock %}
+

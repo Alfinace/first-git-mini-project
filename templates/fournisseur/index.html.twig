@@ -20,7 +20,7 @@
                 <th>Nom</th>
                 <th>Contact</th>
                 <th>Date de creation</th>
-                <th colspan="3">Actions</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,10 +29,6 @@
                 <td>{{ fournisseur.nom }}</td>
                 <td>{{ fournisseur.Contact }}</td>
                 <td>{{ fournisseur.createAt ? fournisseur.createAt|date("d/m/Y"): '' }}</td>
-
-                <td>
-                    <a href="{{ path('fournisseur_show', {'id': fournisseur.id}) }}"><i class="fa fa-eye" aria-hidden="true"></i></a> 
-                </td>
                 <td>
                     <a href="{{ path('fournisseur_edit', {'id': fournisseur.id}) }}" class="text-warning"><i class="fas fa-edit    "></i></a>
                 </td>
@@ -52,4 +48,14 @@
         </tbody>
     </table>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}  
+    <script>
+        // active current page 
+        $(document).ready(()=>{
+            activeCurrentPage('fournisseur');
+        });
+        //end
+    </script>
 {% endblock %}
