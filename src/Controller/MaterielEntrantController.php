@@ -248,7 +248,7 @@ class MaterielEntrantController extends Controller
         
         // Output the generated PDF to Browser (inline view)
         $dompdf->stream('facture_'.$numero.'.pdf', [
-            "Attachment" => ftrue
+            "Attachment" => true
         ]);
         
         return $this->redirectToRoute('materiel_entrant');
