@@ -1,1 +1,2 @@
-# first-git-mini-project
+# Gestion de stock
+
